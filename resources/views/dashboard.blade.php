@@ -7,22 +7,22 @@
                 <div class="p-6 text-gray-900">
                     @if(Auth::user()->role === 'admin')
                     <div class="p-6 text-gray-900">
-                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Hai Admin</h1>
+                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Halo Admin</h1>
                     </div>
                         @include('admin.index')
                     @elseif(Auth::user()->role === 'laboran')
                     <div class="p-6 text-gray-900">
-                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Hai Laboran</h1>
+                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Halo Laboran</h1>
                     </div>
                         @include('laboran.index')
                     @elseif(Auth::user()->role === 'teknisi')
                     <div class="p-6 text-gray-900">
-                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Hai Teknisi</h1>
+                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Halo Teknisi</h1>
                     </div>
                         @include('teknisi.index')
                     @elseif(Auth::user()->role === 'pengguna')
                     <div class="p-6 text-gray-900">
-                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Hai Pengguna</h1>
+                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Halo Pengguna</h1>
                     </div>
                         @include('pengguna.index')
                     @endif
