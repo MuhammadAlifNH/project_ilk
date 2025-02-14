@@ -16,6 +16,8 @@ use App\Http\Controllers\LabController;
 use App\Http\Controllers\PerkerasController;
 use App\Http\Controllers\PerlunakController;
 
+use App\Http\Controllers\DashboardController;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
@@ -24,6 +26,9 @@ Route::get('/login', function () {
     return redirect('/');
 });
 
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -37,9 +37,15 @@
         </div>
         <!-- Informasi Akun Pengguna -->
         <div class="flex items-center">
-            <span class="mr-2">Halo, {{ Auth::user()->name }}</span>
-            <img src="{{ Auth::user()->profile_photo_url }}" alt="Profile" class="h-8 w-8 rounded-full">
-        </div>
+    <span class="mr-2">
+        Halo, {{ Auth::user()->name }}
+        <span class="text-xs text-gray-500 ml-1">
+            ({{ ucfirst(Auth::user()->role) }})
+        </span>
+    </span>
+    <img src="{{ Auth::user()->profile_photo_url ?? asset('images/profile-placeholder.png') }}" alt="Profile" class="h-8 w-8 rounded-full">
+</div>
+
     </header>
     <div class="flex">
         <!-- Sidebar -->
@@ -64,31 +70,42 @@
                 </button>
             </div>
             <!-- Menu Sidebar -->
-            <nav class="mt-4">
-                <a href="{{ route('dashboard') }}"
-                   class="block py-2 px-4 text-gray-700 hover:bg-gray-200 transition-colors duration-200">
-                    <span x-show="sidebarOpen">Dashboard</span>
-                    <span x-show="!sidebarOpen" title="Dashboard">
-                        <svg class="h-5 w-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6"></path>
-                        </svg>
-                    </span>
-                </a>
-                <a href="{{ route('profile.edit') }}"
-                   class="block py-2 px-4 text-gray-700 hover:bg-gray-200 transition-colors duration-200">
-                    <span x-show="sidebarOpen">Profile</span>
-                    <span x-show="!sidebarOpen" title="Profile">
-                        <svg class="h-5 w-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M5.121 17.804A13.937 13.937 0 0112 15c2.485 0 4.847.657 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </span>
-                </a>
-                <!-- Tambahkan menu lainnya sesuai kebutuhan -->
-                 
-            </nav>
-        </aside>
+    <nav class="mt-4">
+        <!-- Menu Dashboard -->
+        <a href="{{ route('dashboard') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">
+            <span x-show="sidebarOpen">Dashboard</span>
+            <span x-show="!sidebarOpen" title="Dashboard">
+                <!-- Contoh icon dashboard -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6"/>
+                </svg>
+            </span>
+        </a>
+        <!-- Menu Profile -->
+        <a href="{{ route('profile.edit') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">
+            <span x-show="sidebarOpen">Profile</span>
+            <span x-show="!sidebarOpen" title="Profile">
+                <!-- Contoh icon profile -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 14a4 4 0 01-8 0M12 2a4 4 0 014 4 4 4 0 11-8 0 4 4 0 014-4z"/>
+                </svg>
+            </span>
+        </a>
+        <!-- Menu Logout -->
+        <form method="POST" action="{{ route('logout') }}" class="mt-2">
+            @csrf
+            <button type="submit" class="w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-200 transition-colors">
+                <span x-show="sidebarOpen">Logout</span>
+                <span x-show="!sidebarOpen" title="Logout">
+                    <!-- Contoh icon logout -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7"/>
+                    </svg>
+                </span>
+            </button>
+        </form>
+    </nav>
+</aside>
     
         <!-- Konten Utama -->
         <main class="flex-1 p-6">

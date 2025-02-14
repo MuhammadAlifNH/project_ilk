@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -26,62 +27,60 @@ class ProfileController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        // Validasi input termasuk field phone
+        // Validasi input termasuk field phone dan file image
         $data = $request->validate([
-            'image' => ['nullable', 'image', 'max:2048'], // Maksimal 2MB
-            'name'  => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'phone' => ['nullable', 'regex:/^[0-9]+$/', 'max:13'], // Validasi field phone
-            'role' => ['required', 'string', Rule::in(['admin', 'laboran', 'teknisi', 'pengguna'])],
-            'verification_code' => ['nullable', 'string'],
+            'image'              => ['nullable', 'image', 'max:2048'], // maksimal 2MB
+            'name'               => ['required', 'string', 'max:255'],
+            'email'              => ['required', 'string', 'email', 'max:255'],
+            'phone'              => ['nullable', 'regex:/^[0-9]+$/', 'max:13'],
+            'role'               => ['required', 'string', Rule::in(['admin', 'laboran', 'teknisi', 'pengguna'])],
+            'verification_code'  => ['nullable', 'string'],
         ]);
 
         $user = $request->user();
-        // Cek apakah role berubah dari sebelumnya
         $roleBerubah = $user->role !== $request->role;
 
-        // Hanya cek kode verifikasi jika role berubah dan role yang baru bukan "pengguna"
+        // Cek verifikasi role jika role berubah (kecuali menjadi 'pengguna')
         if ($roleBerubah && $request->role !== 'pengguna') {
-            $adminCode   = env('ADMIN_VERIFICATION_CODE', '123abc');
-            $laboranCode = env('LABORAN_VERIFICATION_CODE', '456def');
-            $teknisiCode = env('TEKNISI_VERIFICATION_CODE', '789ghi');
-
             $validCodes = [
-                'admin'   => $adminCode,
-                'laboran' => $laboranCode,
-                'teknisi' => $teknisiCode,
+                'admin'   => env('ADMIN_VERIFICATION_CODE', '123abc'),
+                'laboran' => env('LABORAN_VERIFICATION_CODE', '456def'),
+                'teknisi' => env('TEKNISI_VERIFICATION_CODE', '789ghi'),
             ];
 
-            // Pastikan kode verifikasi diisi jika role berubah
             if (empty($request->verification_code)) {
                 return back()->withErrors(['verification_code' => 'Kode verifikasi diperlukan untuk mengganti role.']);
             }
 
-            // Pastikan kode verifikasi cocok dengan yang ada di .env
             if ($request->verification_code !== ($validCodes[$request->role] ?? null)) {
                 return back()->withErrors(['verification_code' => 'Kode verifikasi salah.']);
             }
         }
-        
-        $user = $request->user();
-        $oldEmail = $user->email;
 
-        $user->update([
-            'image' => $request->file('image') ? $request->file('image')->store('images', 'public') : $user->image,
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'role' => $request->role,
-        ]);
-
-        // Jika email berubah, reset verifikasi email
-        if ($oldEmail !== $data['email']) {
-            $user->email_verified_at = null;
+        // Proses upload foto profil jika ada file baru
+        if ($request->hasFile('image')) {
+            // Hapus foto lama jika ada
+            if ($user->profile_photo_path) {
+                Storage::disk('public')->delete($user->profile_photo_path);
+            }
+            // Simpan file baru dan tetapkan path-nya
+            $data['profile_photo_path'] = $request->file('image')->store('images', 'public');
+        } else {
+            // Jika tidak ada file baru, pertahankan nilai lama
+            $data['profile_photo_path'] = $user->profile_photo_path;
         }
 
-        // Isi data pengguna dengan data yang telah divalidasi (termasuk phone)
-        $user->fill($data);
-        $user->save();
+        // Hapus key 'image' karena tidak ingin menyimpan data mentah file
+        unset($data['image']);
+
+        $oldEmail = $user->email;
+        // Jika email berubah, reset verifikasi email
+        if ($oldEmail !== $data['email']) {
+            $data['email_verified_at'] = null;
+        }
+
+        // Update data user sekaligus
+        $user->update($data);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
