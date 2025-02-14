@@ -55,7 +55,6 @@
             </a>
         @endif
     </div>  
-    
     </form>
     
     <!-- Link ke halaman Register -->
