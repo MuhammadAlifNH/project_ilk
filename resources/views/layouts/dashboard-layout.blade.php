@@ -72,15 +72,95 @@
             <!-- Menu Sidebar -->
     <nav class="mt-4">
         <!-- Menu Dashboard -->
-        <a href="{{ route('dashboard') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">
-            <span x-show="sidebarOpen">Dashboard</span>
-            <span x-show="!sidebarOpen" title="Dashboard">
-                <!-- Contoh icon dashboard -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6"/>
-                </svg>
-            </span>
-        </a>
+          <!-- Sub-menu Kelola Data -->
+          <div x-data="{ open: false }">
+                <!-- Tombol Sub-menu -->
+                <button @click="open = !open"
+                        class="flex items-center justify-between w-full px-4 py-3 hover:bg-gray-200 transition-colors focus:outline-none">
+                    <div class="flex items-center">
+                        <!-- Ikon Folder atau sejenisnya -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                             stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M9 5l7 7-7 7" />
+                        </svg>
+                        <!-- Teks Kelola Data -->
+                        <span x-show="sidebarOpen" class="ml-3 text-lg font-medium">Kelola Data</span>
+                    </div>
+                    <!-- Panah Rotasi -->
+                    <svg x-show="sidebarOpen"
+                         :class="{ 'transform rotate-90': open }"
+                         class="w-4 h-4 transition-transform duration-300"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+
+                <!-- Isi Sub-menu -->
+                <div x-show="open" x-collapse>
+                    <!-- Kelola Pengguna -->
+                    <a href="{{ route('users.index') }}"
+                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                        <!-- Ikon Pengguna -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1
+                                     m8-3a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <span x-show="sidebarOpen" class="ml-2">Kelola Pengguna</span>
+                    </a>
+                    <!-- Kelola Fakultas -->
+                    <a href="{{ route('fakultas.index') }}"
+                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                        <!-- Ikon Fakultas -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" stroke="currentColor" 
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 14l9-5-9-5-9 5 9 5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 14l6.16-3.422a12.083 12.083 0 01.84 6.062L12 21" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 14l-6.16-3.422a12.083 12.083 0 00-.84 6.062L12 21" />
+                        </svg>
+                        <span x-show="sidebarOpen" class="ml-2">Kelola Fakultas</span>
+                    </a>
+                    <!-- Kelola Lab -->
+                    <a href="{{ route('labs.index') }}"
+                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                        <!-- Ikon Lab -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" stroke="currentColor"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M21 16V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8M7 12h10" />
+                        </svg>
+                        <span x-show="sidebarOpen" class="ml-2">Kelola Lab</span>
+                    </a>
+                    <!-- Kelola Perangkat Keras -->
+                    <a href="{{ route('perkeras.index') }}"
+                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                        <!-- Ikon Hardware -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                             stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M9.75 17L9 21h6l-.75-4
+                                     M4 6h16M4 6a2 2 0 012-2h12a2 2 0 012 2M4 6v10a2 2 0 002 2h12
+                                     a2 2 0 002-2V6" />
+                        </svg>
+                        <span x-show="sidebarOpen" class="ml-2">Kelola Perangkat Keras</span>
+                    </a>
+                    <!-- Kelola Perangkat Lunak -->
+                    <a href="{{ route('perlunak.index') }}"
+                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                        <!-- Ikon Software -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                             stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
+                        </svg>
+                        <span x-show="sidebarOpen" class="ml-2">Kelola Perangkat Lunak</span>
+                    </a>
+                </div>
         <!-- Menu Profile -->
         <a href="{{ route('profile.edit') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">
             <span x-show="sidebarOpen">Profile</span>
