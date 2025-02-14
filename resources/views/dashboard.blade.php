@@ -6,16 +6,24 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @if(Auth::user()->role === 'admin')
-                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Admin</h1>
+                    <div class="p-6 text-gray-900">
+                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Halo Admin</h1>
+                    </div>
                         @include('admin.index')
                     @elseif(Auth::user()->role === 'laboran')
-                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Laboran</h1>
+                    <div class="p-6 text-gray-900">
+                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Halo Laboran</h1>
+                    </div>
                         @include('laboran.index')
                     @elseif(Auth::user()->role === 'teknisi')
-                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Teknisi</h1>
+                    <div class="p-6 text-gray-900">
+                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Halo Teknisi</h1>
+                    </div>
                         @include('teknisi.index')
                     @elseif(Auth::user()->role === 'pengguna')
-                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Pengguna</h1>
+                    <div class="p-6 text-gray-900">
+                        <h1 class="text-3xl font-bold">Selamat datang di dashboard, Halo Pengguna</h1>
+                    </div>
                         @include('pengguna.index')
                     @endif
                         
