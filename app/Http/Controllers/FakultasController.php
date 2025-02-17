@@ -11,7 +11,7 @@ class FakultasController extends Controller
     public function index()
     {
         // Ambil data fakultas
-        $fakultas = Fakultas::all();
+        $fakultas = Fakultas::paginate(10); // misalnya 10 data per halaman
 
         return view('features.fakultas.index', compact('fakultas'));
     }
@@ -43,4 +43,5 @@ class FakultasController extends Controller
 
         return redirect()->back()->with('success', 'Data fakultas berhasil dihapus');
     }
+    
 }

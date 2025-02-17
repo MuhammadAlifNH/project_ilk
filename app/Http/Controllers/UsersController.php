@@ -12,7 +12,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::all(); 
+        $users = User::paginate(10); // misalnya 10 data per halaman
         return view('features.users.index', compact('users'));
     }
 

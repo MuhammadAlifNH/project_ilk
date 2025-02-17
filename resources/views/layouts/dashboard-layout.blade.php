@@ -79,10 +79,15 @@
                         class="flex items-center justify-between w-full px-4 py-3 hover:bg-gray-200 transition-colors focus:outline-none">
                     <div class="flex items-center">
                         <!-- Ikon Folder atau sejenisnya -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                             stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M9 5l7 7-7 7" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                        <!-- Bagian Atas Folder -->
+                        <path d="M3 7a2 2 0 012-2h5l2 2h9a2 2 0 012 2v2H3V7z" />
+                        <!-- Badan Folder dengan efek transparan -->
+                        <path d="M3 11h18a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2v-7a2 2 0 012-2z" fill-opacity="0.7"/>
+                        <!-- Data Grid: Baris pertama -->
+                        <rect x="5" y="14" width="14" height="1.5" rx="0.5" fill="white"/>
+                        <!-- Data Grid: Baris kedua -->
+                        <rect x="5" y="17" width="14" height="1.5" rx="0.5" fill="white"/>
                         </svg>
                         <!-- Teks Kelola Data -->
                         <span x-show="sidebarOpen" class="ml-3 text-lg font-medium">Kelola Data</span>
@@ -101,7 +106,7 @@
                 <div x-show="open" x-collapse>
                     <!-- Kelola Pengguna -->
                     <a href="{{ route('users.index') }}"
-                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                    class="flex items-center pl-8 py-2 px-4 text-gray-600 hover:bg-blue-300 transition-colors">
                         <!-- Ikon Pengguna -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -112,22 +117,22 @@
                     </a>
                     <!-- Kelola Fakultas -->
                     <a href="{{ route('fakultas.index') }}"
-                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                    class="flex items-center pl-8 py-2 px-4 text-gray-600 hover:bg-blue-300 transition-colors">
                         <!-- Ikon Fakultas -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" stroke="currentColor" 
-                             viewBox="0 0 24 24">
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 14l9-5-9-5-9 5 9 5z" />
+                                d="M12 14l9-5-9-5-9 5 9 5z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 14l6.16-3.422a12.083 12.083 0 01.84 6.062L12 21" />
+                                d="M12 14l6.16-3.422a12.083 12.083 0 01.84 6.062L12 21" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 14l-6.16-3.422a12.083 12.083 0 00-.84 6.062L12 21" />
+                                d="M12 14l-6.16-3.422a12.083 12.083 0 00-.84 6.062L12 21" />
                         </svg>
                         <span x-show="sidebarOpen" class="ml-2">Kelola Fakultas</span>
                     </a>
                     <!-- Kelola Lab -->
                     <a href="{{ route('labs.index') }}"
-                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                    class="flex items-center pl-8 py-2 px-4 text-gray-600 hover:bg-blue-300 transition-colors">
                         <!-- Ikon Lab -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" stroke="currentColor"
                              viewBox="0 0 24 24">
@@ -138,7 +143,7 @@
                     </a>
                     <!-- Kelola Perangkat Keras -->
                     <a href="{{ route('perkeras.index') }}"
-                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                    class="flex items-center pl-8 py-2 px-4 text-gray-600 hover:bg-blue-300 transition-colors">
                         <!-- Ikon Hardware -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                              stroke="currentColor" viewBox="0 0 24 24">
@@ -151,7 +156,7 @@
                     </a>
                     <!-- Kelola Perangkat Lunak -->
                     <a href="{{ route('perlunak.index') }}"
-                    class="block py-2 px-4 text-gray-600 hover:bg-blue-300">
+                    class="flex items-center pl-8 py-2 px-4 text-gray-600 hover:bg-blue-300 transition-colors">
                         <!-- Ikon Software -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                              stroke="currentColor" viewBox="0 0 24 24">
@@ -161,29 +166,30 @@
                         <span x-show="sidebarOpen" class="ml-2">Kelola Perangkat Lunak</span>
                     </a>
                 </div>
-        <!-- Menu Profile -->
-        <a href="{{ route('profile.edit') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">
-            <span x-show="sidebarOpen">Profile</span>
-            <span x-show="!sidebarOpen" title="Profile">
-                <!-- Contoh icon profile -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 14a4 4 0 01-8 0M12 2a4 4 0 014 4 4 4 0 11-8 0 4 4 0 014-4z"/>
+                    <!-- Menu Profile -->
+                    <a href="{{ route('profile.edit') }}" class="flex items-center block py-2 px-4 text-gray-700 hover:bg-gray-200">
+                <!-- Ikon Profile selalu muncul -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="12" r="10" fill="#CBD5E1"/>
+                    <circle cx="12" cy="9" r="3" fill="white"/>
+                    <path d="M15 17a3 3 0 00-6 0" stroke="white" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-            </span>
-        </a>
-        <!-- Menu Logout -->
-        <form method="POST" action="{{ route('logout') }}" class="mt-2">
-            @csrf
-            <button type="submit" class="w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-200 transition-colors">
-                <span x-show="sidebarOpen">Logout</span>
-                <span x-show="!sidebarOpen" title="Logout">
-                    <!-- Contoh icon logout -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7"/>
+                <!-- Teks muncul hanya saat sidebar terbuka -->
+                <span x-show="sidebarOpen" class="ml-2">Profile</span>
+                 </a>
+            <!-- Menu Logout -->
+            <form method="POST" action="{{ route('logout') }}" class="flex items-center block py-2 px-4 text-gray-700 hover:bg-gray-200 transition-colors">
+                @csrf
+                <button type="submit" class="flex items-center focus:outline-none">
+                    <!-- Ikon Logout (tetap sama seperti sebelumnya) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="3" y="5" width="10" height="14" rx="2" fill="#E5E7EB"/>
+                        <path d="M14 12h6m-2-2l2 2-2 2" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                </span>
-            </button>
-        </form>
+                    <!-- Teks Logout muncul hanya saat sidebar terbuka -->
+                    <span x-show="sidebarOpen" class="ml-2">Logout</span>
+                </button>
+            </form>
     </nav>
 </aside>
     
