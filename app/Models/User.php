@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'image',
+        'profile',
         'name',
         'role',
         'email',
@@ -88,6 +88,11 @@ class User extends Authenticatable
     public function perlunak()
     {
         return $this->hasMany(Perlunak::class);
+    }
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class);
     }
     
 }

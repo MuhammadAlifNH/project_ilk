@@ -13,7 +13,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::paginate(10); // misalnya 10 data per halaman
-        return view('features.users.index', compact('users'));
+        return view('features.users', compact('users'));
     }
 
     public function edit($id)
@@ -22,7 +22,7 @@ class UsersController extends Controller
         if ($user->role === 'admin') {
             return redirect()->route('users.index')->with('error', 'Tidak dapat mengubah role admin.');
         }
-        return view('features.users.edit', compact('user'));
+        return view('features.users', compact('user'));
     }
 
     public function update(Request $request, $id)

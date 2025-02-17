@@ -29,12 +29,12 @@ class ProfileController extends Controller
     {
         // Validasi input termasuk field phone dan file image
         $data = $request->validate([
-            'image'              => ['nullable', 'image', 'max:2048'], // maksimal 2MB
             'name'               => ['required', 'string', 'max:255'],
             'email'              => ['required', 'string', 'email', 'max:255'],
             'phone'              => ['nullable', 'regex:/^[0-9]+$/', 'max:13'],
             'role'               => ['required', 'string', Rule::in(['admin', 'laboran', 'teknisi', 'pengguna'])],
             'verification_code'  => ['nullable', 'string'],
+            'image'              => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048']
         ]);
 
         $user = $request->user();
@@ -57,21 +57,13 @@ class ProfileController extends Controller
             }
         }
 
-        // Proses upload foto profil jika ada file baru
         if ($request->hasFile('image')) {
-            // Hapus foto lama jika ada
-            if ($user->profile_photo_path) {
-                Storage::disk('public')->delete($user->profile_photo_path);
+            if ($user->image) {
+                Storage::disk('public')->delete($user->image);
             }
-            // Simpan file baru dan tetapkan path-nya
-            $data['profile_photo_path'] = $request->file('image')->store('images', 'public');
-        } else {
-            // Jika tidak ada file baru, pertahankan nilai lama
-            $data['profile_photo_path'] = $user->profile_photo_path;
+            $imagePath = $request->file('image')->store('profile_images', 'public');
+            $user->image = $imagePath;
         }
-
-        // Hapus key 'image' karena tidak ingin menyimpan data mentah file
-        unset($data['image']);
 
         $oldEmail = $user->email;
         // Jika email berubah, reset verifikasi email

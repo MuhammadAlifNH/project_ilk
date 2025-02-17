@@ -25,7 +25,7 @@ class LabController extends Controller
     {
         $labs = Labs::with('fakultas', 'user')->get();
         $fakultas = Fakultas::all();
-        return view('features.labs.index', compact('labs', 'fakultas'));
+        return view('features.labs', compact('labs', 'fakultas'));
     }
 
 

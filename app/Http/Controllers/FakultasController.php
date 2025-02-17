@@ -13,7 +13,7 @@ class FakultasController extends Controller
         // Ambil data fakultas
         $fakultas = Fakultas::paginate(10); // misalnya 10 data per halaman
 
-        return view('features.fakultas.index', compact('fakultas'));
+        return view('features.fakultas', compact('fakultas'));
     }
 
 

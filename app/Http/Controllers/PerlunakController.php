@@ -13,7 +13,7 @@ class PerlunakController extends Controller
     {
         $fakultas = Fakultas::all();
         $perlunak = Perlunak::with('lab.fakultas', 'user')->get();
-        return view('features.perlunak.index', compact('perlunak', 'fakultas'));
+        return view('features.perlunak', compact('perlunak', 'fakultas'));
     }
     public function store(Request $request)
     {

@@ -15,7 +15,7 @@ class PerkerasController extends Controller
         
         $fakultas = Fakultas::all();
         $perkeras = Perkeras::with('lab.fakultas', 'user')->get();
-        return view('features.perkeras.index', compact('perkeras', 'fakultas'));
+        return view('features.perkeras', compact('perkeras', 'fakultas'));
     }
     public function store(Request $request)
     {

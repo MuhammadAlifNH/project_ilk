@@ -17,6 +17,7 @@ use App\Http\Controllers\PerkerasController;
 use App\Http\Controllers\PerlunakController;
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JadwalController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,8 +56,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('fakultas/{fakultas}', [FakultasController::class, 'destroy'])->name('fakultas.destroy');
     
     Route::get('users', [UsersController::class, 'index'])->name('users.index');
-    Route::get('users/{user}/edit', [UsersController::class, 'edit'])->name('users.edit');
-    Route::put('users/{user}', [UsersController::class, 'update'])->name('users.update');
+    Route::put('/users/{id}', function ($id) {
+        $user = \App\Models\User::findOrFail($id);
+        request()->validate(['role' => 'required|string']);
+        $user->update(['role' => request('role')]);
+        return response()->json(['success' => true]);
+    })->name('users.update'); 
     Route::delete('users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
 
     Route::get('labs', [LabController::class, 'index'])->name('labs.index');
@@ -70,6 +75,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('keras',[PerkerasController::class,'index'])->name('perkeras.index');
     Route::post('keras',[PerkerasController::class,'store'])->name('perkeras.store');
     Route::delete('keras/{perkeras}',[PerkerasController::class,'destroy'])->name('perkeras.destroy');
+
+    Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+    Route::post('/jadwal', [JadwalController::class, 'store'])->name('jadwal.store');
+    Route::delete('/jadwal/{jadwal}', [JadwalController::class, 'destroy'])->name('jadwal.destroy');
 
 });
 

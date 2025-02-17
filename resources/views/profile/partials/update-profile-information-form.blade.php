@@ -20,9 +20,10 @@
         <div class="relative">
             <div class="w-32 h-32 rounded-full overflow-hidden border border-gray-300">
                 <img id="profilePhotoPreview"
-                     src="{{ $user->profile_photo_url ?? asset('images/profile-placeholder.png') }}"
-                     alt="Profile Photo"
-                     class="w-full h-full object-cover">
+                    src="{{ $user->image ? asset('storage/'.$user->image) : asset('images/default-profile.png') }}"
+                    alt="Profile Photo"
+                    class="w-full h-full object-cover">
+
             </div>
             <button type="button"
                     onclick="document.getElementById('profile_photo').click()"
@@ -31,7 +32,7 @@
                     <path d="M4 5a2 2 0 012-2h4a2 2 0 012 2v1h3.5A1.5 1.5 0 0118 7.5v7A1.5 1.5 0 0116.5 16H3.5A1.5 1.5 0 012 14.5v-7A1.5 1.5 0 013.5 6H7V5z" />
                 </svg>
             </button>
-            @if($user->profile_photo_path)
+            @if($user->image)
                 <div class="mt-2 text-center">
                     <button type="button"
                             onclick="removeProfilePhoto()"

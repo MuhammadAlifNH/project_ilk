@@ -30,4 +30,9 @@ class Labs extends Model
     {
         return $this->hasMany(Perlunak::class, 'lab_id');
     }
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class, 'lab_id');
+    }
 }
