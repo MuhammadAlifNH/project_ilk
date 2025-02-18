@@ -14,7 +14,7 @@ class JadwalController extends Controller
     {
         $fakultas = Fakultas::all();
         $jadwal = Jadwal::with('lab.fakultas', 'user')->get();
-        return view('features.jadwal', compact('jadwal', 'fakultas'));
+        return view('features.jadwal.add', compact('jadwal', 'fakultas'));
     }
 
     public function store(Request $request)
