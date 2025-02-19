@@ -43,5 +43,11 @@ class FakultasController extends Controller
 
         return redirect()->back()->with('success', 'Data fakultas berhasil dihapus');
     }
+
+    public function edit(Fakultas $fakultas)
+    {
+    return view('features.fakultas_edit', compact('fakultas'));
+    }
+
     
 }

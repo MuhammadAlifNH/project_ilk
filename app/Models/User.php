@@ -58,6 +58,7 @@ class User extends Authenticatable
             : asset('images/profile-placeholder.png');
     }
 
+
     /**
      * Relasi: User memiliki banyak Fakultas
      */

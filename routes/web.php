@@ -54,6 +54,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('fakultas', [FakultasController::class, 'index'])->name('fakultas.index');
     Route::post('fakultas', [FakultasController::class, 'store'])->name('fakultas.store');
     Route::delete('fakultas/{fakultas}', [FakultasController::class, 'destroy'])->name('fakultas.destroy');
+    Route::get('/fakultas/{fakultas}/edit', [FakultasController::class, 'edit'])->name('fakultas.edit');
     
     Route::get('users', [UsersController::class, 'index'])->name('users.index');
     Route::put('/users/{id}', function ($id) {
