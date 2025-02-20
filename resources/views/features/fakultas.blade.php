@@ -6,7 +6,18 @@
   </x-slot>
 
   <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <h1 class="text-2xl font-bold text-gray-800">Daftar Fakultas</h1>
+                        <button onclick="tambahBaris()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center transition duration-150 ease-in-out">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            Tambah Fakultas
+                        </button>
+                    </div>
 
       <!-- Flash Message -->
       @if(session('success'))
@@ -25,7 +36,6 @@
       <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <!-- Card Header -->
         <div class="px-6 py-4 border-b border-gray-200">
-          <h3 class="text-2xl font-bold text-gray-800">Daftar Fakultas</h3>
         </div>
         <!-- Tabel Data -->
         <div class="overflow-x-auto">
@@ -71,19 +81,6 @@
           {{ $fakultas->links() }}
         </div>
       </div>
-
-      <!-- Tombol Tambah Fakultas (Floating) -->
-      <div class="fixed bottom-4 right-4">
-        <button onclick="tambahBaris()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full flex items-center transition duration-150 ease-in-out">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-          </svg>
-          Tambah Fakultas
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- JavaScript untuk tambah, simpan, dan batal baris -->
   <script>
     function tambahBaris() {
