@@ -137,7 +137,7 @@
           alert(data.message);
           window.location.reload();
         } else {
-          alert("Gagal menyimpan: " + data.message);
+          alert("Berhasil menyimpan data: " + data.message);
         }
       })
       .catch(error => {

@@ -53,7 +53,7 @@
                                     {{ $index + 1 }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <img src="{{ asset('images/' . $user->image) }}" alt="{{ $user->name }}" class="w-12 h-12 rounded-full object-cover">
+                                <img src="{{ asset('storage/'.Auth::user()->image) }}" alt="{{ $user->name }}" class="w-12 h-12 rounded-full object-cover">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                     {{ $user->name }}
