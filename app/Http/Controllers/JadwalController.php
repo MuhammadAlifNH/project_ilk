@@ -21,27 +21,35 @@ class JadwalController extends Controller
     {
         $request->validate([
             'fakultas_id' => 'required|exists:fakultas,id',
-            'lab_id' => 'required|exists:labs,id',
-            'jadwal' => 'required|image|mimes:jpg,jpeg,png|max:2048' // max 2MB
+            'lab_id'      => 'required|exists:labs,id',
+            'jadwal'      => 'required|mimes:jpg,jpeg,png,pdf|max:2048' // file gambar dan PDF, max 2MB
         ]);
-
+    
         try {
             // Simpan file ke storage/public/jadwal
             $fileName = time() . '.' . $request->jadwal->extension();
             $filePath = $request->jadwal->storeAs('jadwal', $fileName, 'public');
-
+    
             $jadwal = new Jadwal();
             $jadwal->fakultas_id = $request->fakultas_id;
             $jadwal->lab_id = $request->lab_id;
             $jadwal->jadwal = $filePath; // Simpan path file ke database
             $jadwal->user_id = Auth::id();
             $jadwal->save();
-
-            return response()->json(['success' => true, 'message' => 'Jadwal berhasil ditambahkan', 'file_path' => asset("storage/$filePath")]);
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Jadwal berhasil ditambahkan',
+                'file_path' => asset("storage/$filePath")
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Gagal menyimpan data: ' . $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menyimpan data: ' . $e->getMessage()
+            ]);
         }
     }
+    
 
 
     public function destroy(Jadwal $jadwal)

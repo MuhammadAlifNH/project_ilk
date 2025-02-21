@@ -22,18 +22,19 @@ class FakultasController extends Controller
         $request->validate([
             'nama_fakultas' => 'required|string|max:255',
         ]);
-
-        $fakultas = Fakultas::create([
-            'nama_fakultas' => $request->nama_fakultas,
-            'user_id' => Auth::id(),
-        ]);
-
+    
+        $fakultas = new Fakultas();
+        $fakultas->nama_fakultas = $request->nama_fakultas;
+        $fakultas->user_id = auth()->id();
+        $fakultas->save();
+    
         return response()->json([
-            'id' => $fakultas->id,
-            'nama_fakultas' => $fakultas->nama_fakultas,
-            'user_name' => Auth::user()->name,
+            'success' => true,
+            'message' => 'Fakultas berhasil disimpan.',
+            'data' => $fakultas
         ]);
     }
+    
 
 
     public function destroy(Fakultas $fakultas)

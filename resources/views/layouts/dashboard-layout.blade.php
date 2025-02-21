@@ -35,16 +35,13 @@
                 </a>
             </div>
         </div>
-       <!-- Informasi Akun Pengguna -->
 <!-- Informasi Akun Pengguna -->
 <div class="flex items-center">
-    <span class="mr-2">
-        Halo, {{ Auth::user()->name }}
-        <span class="text-xs text-gray-500 ml-1">
-            ({{ ucfirst(Auth::user()->role) }})
-        </span>
-    </span>
-    <img src="{{ asset('storage/'.Auth::user()->image) }}" alt="Profile" class="h-8 w-8 rounded-full">
+    <div class="flex flex-col w-max">
+        <span>Halo, {{ Auth::user()->name }}</span>
+        <span class="text-xs text-gray-500 text-right">({{ ucfirst(Auth::user()->role) }})</span>
+    </div>
+    <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class="h-8 w-8 rounded-full ml-2">
     
     <!-- Tombol Notifikasi di sebelah kanan foto -->
     <button class="relative ml-4 text-gray-500 hover:text-gray-700 focus:outline-none">
