@@ -20,6 +20,6 @@ class Laboran
             return $next($request);
         }
 
-        abort( 401);
+        return redirect('/dashboard')->with('error', 'Pengguna tidak dikenali');
     }
 }

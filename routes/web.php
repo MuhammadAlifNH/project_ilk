@@ -44,42 +44,31 @@ Route::get('/get-labs/{fakultas_id}', function ($fakultas_id) {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('profile', ProfileController::class);
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin',[AdminController::class,'index'])->name('admin.index');
-    Route::get('fakultas', [FakultasController::class, 'index'])->name('fakultas.index');
-    Route::post('fakultas', [FakultasController::class, 'store'])->name('fakultas.store');
-    Route::delete('fakultas/{fakultas}', [FakultasController::class, 'destroy'])->name('fakultas.destroy');
-    Route::get('/fakultas/{fakultas}/edit', [FakultasController::class, 'edit'])->name('fakultas.edit');
     
-    Route::get('users', [UsersController::class, 'index'])->name('users.index');
+    Route::resource('fakultas', FakultasController::class);
+
+    Route::resource('users', UsersController::class);
     Route::put('/users/{id}', function ($id) {
         $user = \App\Models\User::findOrFail($id);
         request()->validate(['role' => 'required|string']);
         $user->update(['role' => request('role')]);
         return response()->json(['success' => true]);
     })->name('users.update'); 
-    Route::delete('users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
+    
+    Route::resource('lab', LabController::class);
 
-    Route::get('labs', [LabController::class, 'index'])->name('labs.index');
-    Route::post('labs', [LabController::class, 'store'])->name('labs.store');
-    Route::delete('labs/{lab}', [LabController::class, 'destroy'])->name('labs.destroy');
+    Route::resource('perlunak', PerlunakController::class);
 
-    Route::get('lunak',[PerlunakController::class,'index'])->name('perlunak.index');
-    Route::post('lunak',[PerlunakController::class,'store'])->name('perlunak.store');
-    Route::delete('lunak/{perlunak}',[PerlunakController::class,'destroy'])->name('perlunak.destroy');
+    Route::resource('perkeras', PerkerasController::class);
 
-    Route::get('keras',[PerkerasController::class,'index'])->name('perkeras.index');
-    Route::post('keras',[PerkerasController::class,'store'])->name('perkeras.store');
-    Route::delete('keras/{perkeras}',[PerkerasController::class,'destroy'])->name('perkeras.destroy');
+    Route::resource('jadwal', JadwalController::class);
 
-    Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
-    Route::post('/jadwal', [JadwalController::class, 'store'])->name('jadwal.store');
-    Route::delete('/jadwal/{jadwal}', [JadwalController::class, 'destroy'])->name('jadwal.destroy');
+    Route::resource('inventaris', 'InventarisController');
 
 });
 

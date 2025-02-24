@@ -96,4 +96,8 @@ class User extends Authenticatable
         return $this->hasMany(Jadwal::class);
     }
     
+    public function inventaris()
+    {
+        return $this->hasMany(Inventaris::class);
+    }
 }

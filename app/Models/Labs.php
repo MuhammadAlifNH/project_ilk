@@ -35,4 +35,9 @@ class Labs extends Model
     {
         return $this->hasMany(Jadwal::class, 'lab_id');
     }
+
+    public function inventaris()
+    {
+        return $this->hasMany(Inventaris::class, 'lab_id');
+    }
 }

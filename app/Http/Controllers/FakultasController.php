@@ -25,7 +25,7 @@ class FakultasController extends Controller
     
         $fakultas = new Fakultas();
         $fakultas->nama_fakultas = $request->nama_fakultas;
-        $fakultas->user_id = auth()->id();
+        $fakultas->user_id = Auth::id();
         $fakultas->save();
     
         return response()->json([
@@ -44,11 +44,5 @@ class FakultasController extends Controller
 
         return redirect()->back()->with('success', 'Data fakultas berhasil dihapus');
     }
-
-    public function edit(Fakultas $fakultas)
-    {
-    return view('features.fakultas_edit', compact('fakultas'));
-    }
-
     
 }
