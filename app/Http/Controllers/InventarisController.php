@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Fakultas;
 use App\Models\Inventaris;
 use App\Models\InventarisDetail;
-use App\Models\Jadwal;
 use App\Models\Labs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
