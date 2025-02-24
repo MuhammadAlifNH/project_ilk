@@ -15,7 +15,7 @@ class InventarisController extends Controller
     public function index()
     {
         $fakultas = Fakultas::all();
-        $jadwal = Jadwal::with('lab.fakultas', 'user')->get();
+        $inventaris = Inventaris::with('lab.fakultas', 'user')->get();
         return view('features.inventaris.index', compact('inventaris', 'fakultas'));
     }
 

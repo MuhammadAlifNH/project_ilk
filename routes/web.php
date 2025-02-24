@@ -17,6 +17,7 @@ use App\Http\Controllers\PerkerasController;
 use App\Http\Controllers\PerlunakController;
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\JadwalController;
 
 Route::get('/', function () {
@@ -44,14 +45,16 @@ Route::get('/get-labs/{fakultas_id}', function ($fakultas_id) {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('profile', ProfileController::class);
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin',[AdminController::class,'index'])->name('admin.index');
     
     Route::resource('fakultas', FakultasController::class);
-
+    
     Route::resource('users', UsersController::class);
     Route::put('/users/{id}', function ($id) {
         $user = \App\Models\User::findOrFail($id);
@@ -60,7 +63,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return response()->json(['success' => true]);
     })->name('users.update'); 
     
-    Route::resource('lab', LabController::class);
+    Route::resource('labs', LabController::class);
 
     Route::resource('perlunak', PerlunakController::class);
 
@@ -68,7 +71,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('jadwal', JadwalController::class);
 
-    Route::resource('inventaris', 'InventarisController');
+    Route::resource('inventaris', InventarisController::class);
 
 });
 
