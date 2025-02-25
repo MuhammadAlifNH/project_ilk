@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('inventaris_id')->constrained('inventaris')->onDelete('cascade');
             $table->string('kode_barang')->default('-');
             $table->string('nama_barang');
-            $table->string('merk/type')->default('-');
+            $table->string('merk_type')->default('-');
             $table->year('tahun_pembelian');
             $table->integer('jumlah');
             $table->enum('kondisi', ['Baik', 'Buruk'])->default('Baik');

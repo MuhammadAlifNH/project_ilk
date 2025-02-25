@@ -9,6 +9,7 @@ class Labs extends Model
 {
     use HasFactory;
 
+    protected $table = 'labs';
     protected $fillable = ['fakultas_id', 'nama_lab', 'user_id', 'jumlah_meja'];
 
     public function fakultas()
@@ -40,4 +41,10 @@ class Labs extends Model
     {
         return $this->hasMany(Inventaris::class, 'lab_id');
     }
+
+    public function getLabs($fakultasId)
+    {
+        return response()->json(Labs::where('fakultas_id', $fakultasId)->get());
+    }
+
 }

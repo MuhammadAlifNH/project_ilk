@@ -29,5 +29,11 @@ class Inventaris extends Model
     {
         return $this->hasMany(InventarisDetail::class);
     }
+
+    public function getLabs($fakultasId)
+    {
+        return response()->json(Labs::where('fakultas_id', $fakultasId)->get());
+    }
+
 }
 

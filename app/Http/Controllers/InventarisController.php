@@ -31,41 +31,55 @@ class InventarisController extends Controller
             'tanggal' => 'required|date',
             'fakultas_id' => 'required|exists:fakultas,id',
             'lab_id' => 'required|exists:labs,id',
-            'user_id' => 'required|exists:users,id',
+            'details' => 'required|array',
+            'details.*.kode_barang' => 'nullable|string',
+            'details.*.nama_barang' => 'required|string',
+            'details.*.merk_type' => 'nullable|string',
+            'details.*.tahun_pembelian' => 'required|integer',
+            'details.*.jumlah' => 'required|integer',
+            'details.*.kondisi' => 'required|string',
+            'details.*.keterangan' => 'required|string',
         ]);
 
-        $inventaris = Inventaris::create([
-            'tanggal' => $request->tanggal,
-            'fakultas_id' => $request->fakultas_id,
-            'lab_id' => $request->lab_id,
-            'user_id' => $request->user_id,
-        ]);
-
-        foreach ($request->details as $detail) {
-            InventarisDetail::create([
-                'inventaris_id' => $inventaris->id,
-                'kode_barang' => $detail['kode_barang'],
-                'nama_barang' => $detail['nama_barang'],
-                'merk/type' => $detail['merk/type'],
-                'tahun_pembelian' => $detail['tahun_pembelian'],
-                'jumlah' => $detail['jumlah'],
-                'kondisi' => $detail['kondisi'],
-                'keterangan' => $detail['keterangan'],
+        try {
+            // Simpan data utama ke tabel inventaris
+            $inventaris = Inventaris::create([
+                'tanggal' => $request->tanggal,
+                'fakultas_id' => $request->fakultas_id,
+                'lab_id' => $request->lab_id,
+                'user_id' => Auth::id(), // Simpan ID pengguna yang menambahkan
             ]);
+
+            // Simpan setiap detail barang ke tabel inventaris_details
+            foreach ($request->details as $detail) {
+                InventarisDetail::create([
+                    'inventaris_id' => $inventaris->id, // Hubungkan dengan inventaris_id
+                    'kode_barang' => $detail['kode_barang'] ?? '-',
+                    'nama_barang' => $detail['nama_barang'],
+                    'merk_type' => $detail['merk_type'] ?? '-',
+                    'tahun_pembelian' => $detail['tahun_pembelian'],
+                    'jumlah' => $detail['jumlah'],
+                    'kondisi' => $detail['kondisi'],
+                    'keterangan' => $detail['keterangan'],
+                ]);
+            }
+
+            return redirect()->route('inventaris.index')->with('success', 'Data inventaris berhasil disimpan!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
         }
-
-        return redirect()->route('inventaris.index')->with('success', 'Inventaris berhasil ditambahkan');
     }
 
-    public function view(Inventaris $inventaris)
-    {
-        $inventaris= Inventaris::with('fakultas', 'labs', 'user', 'details')->findOrFail($inventaris->id);
-        return view('features.inventaris.view', compact('inventaris'));
+
+    public function show(Inventaris $inventaris) {
+        return view('features.inventaris.show', compact('inventaris'));
     }
 
-    public function destroy(Inventaris $inventaris)
+    public function destroy($id)
     {
+        $inventaris = Inventaris::findOrFail($id);
         $inventaris->delete();
-        return redirect()->route('inventaris.index')->with('success', 'Inventaris berhasil dihapus');
+
+        return redirect()->route('inventaris.index')->with('success', 'Data inventaris berhasil dihapus.');
     }
 }
