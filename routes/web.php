@@ -73,6 +73,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('inventaris', InventarisController::class);
 
+    Route::get('/inventaris/download/{id}', [InventarisController::class, 'download'])->name('inventaris.download');
+
+
+
 });
 
 Route::middleware(['auth', 'teknisi'])->group(function () {
@@ -88,4 +92,5 @@ Route::middleware(['auth', 'pengguna'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
 

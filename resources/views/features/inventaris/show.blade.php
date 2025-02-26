@@ -17,7 +17,10 @@
                             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                                 <div class="text-center">
                                     <h2 class="text-2xl font-bold">INVENTARIS</h2>
-                                    <p class="text-lg font-semibold">RUANG LABORATORIUM {{ $inventaris->lab->nama_lab }}, {{ $inventaris->fakultas->nama_fakultas }}</p>
+                                    <p class="text-lg font-semibold">
+                                        RUANG LABORATORIUM {{ optional($inventaris->lab)->nama_lab ?? 'Tidak Diketahui' }},
+                                        {{ optional($inventaris->fakultas)->nama_fakultas ?? 'Tidak Diketahui' }}
+                                    </p>
                                     <p class="text-gray-600">UNIVERSITAS ISLAM NAHDLATUL ULAMA JEPARA</p>
                                     <p class="text-gray-600">Tanggal: {{ $inventaris->tanggal }}</p>
                                 </div>
@@ -26,15 +29,15 @@
                                     <button onclick="window.print()" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg">
                                         Print
                                     </button>
-                                    <a href="{{ route('inventaris.download', $inventaris->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg">
+                                    <a href="{{ route('inventaris.download', $inventaris) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg">
                                         Download PDF
                                     </a>
+
+
                                 </div>
                 
                                 <div class="border border-gray-300 rounded-lg p-4">
                                     <table class="w-full border-collapse border border-gray-400">
-                                        <thead>
-                                            <tr class="bg-gray-100">
                                                 <th class="border border-gray-400 px-4 py-2">No</th>
                                                 <th class="border border-gray-400 px-4 py-2">Kode Barang</th>
                                                 <th class="border border-gray-400 px-4 py-2">Nama Barang</th>

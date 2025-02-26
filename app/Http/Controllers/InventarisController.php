@@ -71,9 +71,14 @@ class InventarisController extends Controller
     }
 
 
-    public function show(Inventaris $inventaris) {
+    public function show( $id)
+    {
+        // Eager load relasi jika belum ter-load
+        $inventaris = Inventaris::findOrFail($id)->load(['lab', 'fakultas', 'details']);
         return view('features.inventaris.show', compact('inventaris'));
     }
+    
+    
 
     public function destroy($id)
     {
@@ -82,4 +87,13 @@ class InventarisController extends Controller
 
         return redirect()->route('inventaris.index')->with('success', 'Data inventaris berhasil dihapus.');
     }
+
+    public function download($id)
+    {
+        $inventaris = Inventaris::with(['lab', 'fakultas', 'details'])->findOrFail($id);
+        $pdf = PDF::loadView('features.inventaris.pdf', compact('inventaris'));
+        return $pdf->download('inventaris_' . $inventaris->id . '.pdf');
+    }
+
+
 }
